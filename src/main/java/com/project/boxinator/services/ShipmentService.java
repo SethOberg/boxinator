@@ -24,4 +24,6 @@ public class ShipmentService {
                 .orElseThrow(() -> new ShipmentNotFoundException(id));
     }
 
+    public void addShipment(Shipment shipment) {
+    }
 }
