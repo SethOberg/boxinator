@@ -1,9 +1,7 @@
 package com.project.boxinator.models;
 
 import com.project.boxinator.enums.ShipmentStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -11,6 +9,9 @@ import java.util.Date;
 @Data
 @Entity
 public class ShipmentStatusHistory {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int Id;
     private ShipmentStatus shipmentStatus;
     private Date date;
 

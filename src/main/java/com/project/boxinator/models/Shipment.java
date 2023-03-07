@@ -7,8 +7,9 @@ import lombok.Data;
 import java.util.LinkedList;
 import java.util.List;
 
-@Data
+
 @Entity
+@Data
 public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +24,11 @@ public class Shipment {
     private String boxColour;
     @Column(nullable = false)
     private String destinationCountry;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
 
     @OneToMany(mappedBy = "shipment")
     private List<ShipmentStatusHistory> shipmentHistory = new LinkedList<>();

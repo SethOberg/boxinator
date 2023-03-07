@@ -20,6 +20,12 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public void addUser(User user) {
+    public User addUser(User user) {
+        return userRepository.save(user);
+    }
+
+    public User update(User user) {
+        getUserById(user.getId());
+        return userRepository.save(user);
     }
 }

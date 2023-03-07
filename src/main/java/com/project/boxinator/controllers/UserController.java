@@ -15,6 +15,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping
+    public void addUser (@RequestBody User user) {
+        userService.addUser(user);
+    }
+
     @GetMapping
     public ResponseEntity getAllUsers() {return ResponseEntity.ok(userService.getAllUsers());}
 
@@ -23,11 +28,19 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 
-    @PostMapping
-    public void addUser (@RequestBody User user) {
-        userService.addUser(user);
+    @PutMapping
+    public void updateUser(@PathVariable Integer id, @RequestBody User user) {
+        if(id != user.getId())
+            ResponseEntity.badRequest().build();
+        userService.update(user);
+
 
     }
+
+
+
+
+
 
 
 
