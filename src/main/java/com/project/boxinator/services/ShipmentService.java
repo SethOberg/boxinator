@@ -2,6 +2,7 @@ package com.project.boxinator.services;
 
 import com.project.boxinator.exceptions.ShipmentNotFoundException;
 import com.project.boxinator.models.Shipment;
+import com.project.boxinator.models.User;
 import com.project.boxinator.repositories.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +26,10 @@ public class ShipmentService {
     }
 
     public void addShipment(Shipment shipment) {
+    }
+
+    public Shipment update(Shipment shipment) {
+        getShipmentById(shipment.getId());
+        return shipmentRepository.save(shipment);
     }
 }

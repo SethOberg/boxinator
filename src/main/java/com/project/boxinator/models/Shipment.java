@@ -2,14 +2,20 @@ package com.project.boxinator.models;
 
 import com.project.boxinator.enums.WeightOption;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +37,21 @@ public class Shipment {
 
 
     @OneToMany(mappedBy = "shipment")
-    private List<ShipmentStatusHistory> shipmentHistory = new LinkedList<>();
+    private Set<ShipmentStatusHistory> shipmentHistory = new HashSet<>();
+
+    public Shipment(int id, String recieverName, WeightOption weightOption, String boxColour, String destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
+        Id = id;
+        this.recieverName = recieverName;
+        this.weightOption = weightOption;
+        this.boxColour = boxColour;
+        this.destinationCountry = destinationCountry;
+        this.shipmentHistory = shipmentHistory;
+    }
+
+    public void addUserToShipment(User user) {
+        user.add(user);
+    }
+
+
 
 }

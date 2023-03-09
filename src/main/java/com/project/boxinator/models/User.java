@@ -41,4 +41,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Shipment> shipments = new HashSet<>();
 
+    public void addShipmentToUser(Shipment shipment) { shipments.add(shipment); }
+    public void add(User user) {
+    }
 }
