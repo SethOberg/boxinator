@@ -1,5 +1,6 @@
 package com.project.boxinator.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.boxinator.enums.TypeOfUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,6 @@ import java.util.Set;
 
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="shipmentUser")
@@ -38,10 +38,99 @@ public class User {
     private String contactNumber;
     @Column(nullable = false)
     private TypeOfUser typeOfUser;
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<Shipment> shipments = new HashSet<>();
 
     public void addShipmentToUser(Shipment shipment) { shipments.add(shipment); }
     public void add(User user) {
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Integer getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(Integer zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public TypeOfUser getTypeOfUser() {
+        return typeOfUser;
+    }
+
+    public void setTypeOfUser(TypeOfUser typeOfUser) {
+        this.typeOfUser = typeOfUser;
+    }
+
+    public Set<Shipment> getShipments() {
+        return shipments;
+    }
+
+    public void setShipments(Set<Shipment> shipments) {
+        this.shipments = shipments;
     }
 }

@@ -40,7 +40,7 @@ public class BoxinatorApplication implements ApplicationRunner {
 		userRepository.save(Seth);
 
 		Shipment bluebox2 = new Shipment(1, "Greger", WeightOption.PREMIUM, "blue",
-				"Norway", Milla,  new HashSet<>());
+				"Norway",  new HashSet<>());
 
 //		Shipment blueBox = new Shipment(1, "Greger", WeightOption.PREMIUM, "blue",
 //				"Norway",  new HashSet<>());

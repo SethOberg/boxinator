@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-@Data
 @Entity
 public class ShipmentStatusHistory {
     @Id
@@ -18,4 +17,37 @@ public class ShipmentStatusHistory {
     @ManyToOne
     @JoinColumn(name = "shipment_id")
     private Shipment shipment;
+
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public ShipmentStatus getShipmentStatus() {
+        return shipmentStatus;
+    }
+
+    public void setShipmentStatus(ShipmentStatus shipmentStatus) {
+        this.shipmentStatus = shipmentStatus;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Shipment getShipment() {
+        return shipment;
+    }
+
+    public void setShipment(Shipment shipment) {
+        this.shipment = shipment;
+    }
 }

@@ -1,5 +1,6 @@
 package com.project.boxinator.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.boxinator.enums.WeightOption;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,6 @@ import java.util.Set;
 
 
 @Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Shipment {
@@ -35,7 +35,7 @@ public class Shipment {
     @JoinColumn(name="user_id")
     private User user;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "shipment")
     private Set<ShipmentStatusHistory> shipmentHistory = new HashSet<>();
 
@@ -49,9 +49,62 @@ public class Shipment {
     }
 
     public void addUserToShipment(User user) {
-        user.add(user);
+        setUser(user);
     }
 
+    public int getId() {
+        return Id;
+    }
 
+    public void setId(int id) {
+        Id = id;
+    }
 
+    public String getRecieverName() {
+        return recieverName;
+    }
+
+    public void setRecieverName(String recieverName) {
+        this.recieverName = recieverName;
+    }
+
+    public WeightOption getWeightOption() {
+        return weightOption;
+    }
+
+    public void setWeightOption(WeightOption weightOption) {
+        this.weightOption = weightOption;
+    }
+
+    public String getBoxColour() {
+        return boxColour;
+    }
+
+    public void setBoxColour(String boxColour) {
+        this.boxColour = boxColour;
+    }
+
+    public String getDestinationCountry() {
+        return destinationCountry;
+    }
+
+    public void setDestinationCountry(String destinationCountry) {
+        this.destinationCountry = destinationCountry;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<ShipmentStatusHistory> getShipmentHistory() {
+        return shipmentHistory;
+    }
+
+    public void setShipmentHistory(Set<ShipmentStatusHistory> shipmentHistory) {
+        this.shipmentHistory = shipmentHistory;
+    }
 }
