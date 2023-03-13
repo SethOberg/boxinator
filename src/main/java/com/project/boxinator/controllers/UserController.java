@@ -43,20 +43,28 @@ public class UserController {
         userService.update(user);
     }
 
-    @PutMapping("{userId}/{shipmentId}")
-    public void addShipmentToUser(@PathVariable Integer userId,
-                                    @PathVariable Integer shipmentId) {
+   @GetMapping("{userId}/shipments")
+   public List<Shipment> getAllShipmentsByUser(@PathVariable Integer userId) {
+        List<Shipment> shipments = userService.getUserById(userId).getShipments()
+                .stream()
+                //.map metod för att göra om till DTO
+                .collect(Collectors.toList());
+
+        return shipments;
+   }
+
+    @PutMapping("{userId}/shipments/{shipmentId}")
+    public ResponseEntity addShipmentToUser(@PathVariable Integer userId,
+                                                    @PathVariable Integer shipmentId) {
         User user = userService.getUserById(userId);
         Shipment shipment = shipmentService.getShipmentById(shipmentId);
         user.addShipmentToUser(shipment);
         shipment.addUserToShipment(user);
         userService.update(user);
         shipmentService.update(shipment);
+
+        return ResponseEntity.ok("User added to shipment");
     }
-
-
-
-
 
 
 

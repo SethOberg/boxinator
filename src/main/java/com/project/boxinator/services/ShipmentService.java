@@ -1,7 +1,9 @@
 package com.project.boxinator.services;
 
+import com.project.boxinator.enums.ShipmentStatus;
 import com.project.boxinator.exceptions.ShipmentNotFoundException;
 import com.project.boxinator.models.Shipment;
+import com.project.boxinator.models.ShipmentStatusHistory;
 import com.project.boxinator.models.User;
 import com.project.boxinator.repositories.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,19 @@ public class ShipmentService {
     }
 
     public void addShipment(Shipment shipment) {
+
+        ShipmentStatusHistory SSHCreate = new ShipmentStatusHistory(ShipmentStatus.CREATED, shipment);
+        shipment.addSSHToShipment(SSHCreate);
+        shipmentRepository.save(shipment);
+
+
     }
 
     public Shipment update(Shipment shipment) {
         getShipmentById(shipment.getId());
         return shipmentRepository.save(shipment);
     }
+
+
+
 }

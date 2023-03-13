@@ -35,8 +35,7 @@ public class Shipment {
     @JoinColumn(name="user_id")
     private User user;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "shipment")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipment")
     private Set<ShipmentStatusHistory> shipmentHistory = new HashSet<>();
 
     public Shipment(int id, String recieverName, WeightOption weightOption, String boxColour, String destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
@@ -107,4 +106,10 @@ public class Shipment {
     public void setShipmentHistory(Set<ShipmentStatusHistory> shipmentHistory) {
         this.shipmentHistory = shipmentHistory;
     }
+
+    public void addSSHToShipment(ShipmentStatusHistory shipmentStatusHistory) {
+        shipmentHistory.add(shipmentStatusHistory);
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.project.boxinator.controllers;
 
 import com.project.boxinator.models.Shipment;
+import com.project.boxinator.models.ShipmentStatusHistory;
 import com.project.boxinator.models.User;
 import com.project.boxinator.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,13 @@ public class ShipmentController {
         shipmentService.update(shipment);
     }
 
+//    @PutMapping("{shipmentId}/status")
+//    public ResponseEntity addSSHToShipment(@PathVariable Integer shipmentId, @RequestBody ShipmentStatusHistory shipmentStatusHistory) {
+//    Shipment shipment = shipmentService.getShipmentById(shipmentId);
+//
+//
+//
+//    }
 
 
 

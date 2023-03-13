@@ -1,23 +1,33 @@
 package com.project.boxinator.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.boxinator.enums.ShipmentStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class ShipmentStatusHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
     private ShipmentStatus shipmentStatus;
-    private Date date;
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "shipment_id")
     private Shipment shipment;
-
 
     public int getId() {
         return Id;
@@ -35,12 +45,12 @@ public class ShipmentStatusHistory {
         this.shipmentStatus = shipmentStatus;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Shipment getShipment() {
@@ -50,4 +60,12 @@ public class ShipmentStatusHistory {
     public void setShipment(Shipment shipment) {
         this.shipment = shipment;
     }
+
+
+    public ShipmentStatusHistory(ShipmentStatus shipmentStatus, Shipment shipment) {
+        this.shipmentStatus = shipmentStatus;
+        this.shipment = shipment;
+    }
 }
+
+
