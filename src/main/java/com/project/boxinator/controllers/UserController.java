@@ -38,25 +38,21 @@ public class UserController {
 
     @PutMapping("{userId}")
     public void updateUser(@PathVariable Integer userId, @RequestBody User user) {
-        if(userId != user.getId())
+        if(userId != user.getUserId())
             ResponseEntity.badRequest().build();
         userService.update(user);
     }
 
-    @PutMapping("{userId}/{shipmentId}")
-    public void addShipmentToUser(@PathVariable Integer userId,
-                                    @PathVariable Integer shipmentId) {
+    @PutMapping("{userId}/shipments/{shipmentId}")
+    public ResponseEntity addShipmentToUser(@PathVariable Integer userId,
+                                            @PathVariable Integer shipmentId) {
         User user = userService.getUserById(userId);
         Shipment shipment = shipmentService.getShipmentById(shipmentId);
         user.addShipmentToUser(shipment);
-        shipment.addUserToShipment(user);
         userService.update(user);
-        shipmentService.update(shipment);
+        return ResponseEntity.ok("Shipment added to user");
+
     }
-
-
-
-
 
 
 

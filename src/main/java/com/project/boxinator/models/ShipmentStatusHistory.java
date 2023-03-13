@@ -15,7 +15,7 @@ public class ShipmentStatusHistory {
     private ShipmentStatus shipmentStatus;
     private Date date;
 
-    @ManyToOne
-    @JoinColumn(name = "shipment_id")
-    private Shipment shipment;
+//    @ManyToOne
+//    @JoinColumn(name = "shipment_id")
+//    private Shipment shipment;
 }

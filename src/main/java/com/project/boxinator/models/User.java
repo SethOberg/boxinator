@@ -1,10 +1,13 @@
 package com.project.boxinator.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project.boxinator.enums.TypeOfUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -19,7 +22,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Id;
+    private int userId;
     @Column(length = 50)
     private String firstName;
     @Column(length = 50)
@@ -38,10 +41,12 @@ public class User {
     private String contactNumber;
     @Column(nullable = false)
     private TypeOfUser typeOfUser;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userShipments", referencedColumnName = "userId")
     private Set<Shipment> shipments = new HashSet<>();
 
-    public void addShipmentToUser(Shipment shipment) { shipments.add(shipment); }
-    public void add(User user) {
+    public void addShipmentToUser(Shipment shipment) {
+        shipments.add(shipment);
     }
+
 }
