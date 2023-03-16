@@ -24,7 +24,9 @@ public class SecurityConfig  {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/resources/public").permitAll()
                         .requestMatchers("/api/v1/resources/protected").hasAnyRole("ROLE_ADMIN", "ADMIN", "admin", "role_admin")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
+                        //TODO: remove anyrequest.permitAll() later and comment back anyrequest.Authenticated
+                        //.anyRequest().authenticated()
                 )
                 .oauth2ResourceServer()
                 .jwt()
