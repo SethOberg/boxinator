@@ -1,37 +1,34 @@
 package com.project.boxinator.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.boxinator.enums.WeightOption;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
 
     @Column(length = 150, nullable = false)
-    private String recieverName;
+    private String receiverName;
     @Column(nullable = false)
     private WeightOption weightOption;
 
     @Column(length = 50, nullable = false)
-    private String boxColour;
+    private String boxColor;
 
-    @ManyToOne
-    @JoinColumn(name = "destination_country_id")
-    private Country destinationCountry;
+    @Column(length = 50, nullable = false)
+    private String destinationCountry;
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -43,11 +40,11 @@ public class Shipment {
     @Column(length = 10)
     private Integer price;
 
-    public Shipment(int id, String recieverName, WeightOption weightOption, String boxColour, Country destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
+    public Shipment(int id, String receiverName, WeightOption weightOption, String boxColor, String destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
         Id = id;
-        this.recieverName = recieverName;
+        this.receiverName = receiverName;
         this.weightOption = weightOption;
-        this.boxColour = boxColour;
+        this.boxColor = boxColor;
         this.destinationCountry = destinationCountry;
         this.shipmentHistory = shipmentHistory;
     }
@@ -64,12 +61,12 @@ public class Shipment {
         Id = id;
     }
 
-    public String getRecieverName() {
-        return recieverName;
+    public String getReceiverName() {
+        return receiverName;
     }
 
-    public void setRecieverName(String recieverName) {
-        this.recieverName = recieverName;
+    public void setReceiverName(String recieverName) {
+        this.receiverName = recieverName;
     }
 
     public WeightOption getWeightOption() {
@@ -81,18 +78,18 @@ public class Shipment {
     }
 
     public String getBoxColour() {
-        return boxColour;
+        return boxColor;
     }
 
     public void setBoxColour(String boxColour) {
-        this.boxColour = boxColour;
+        this.boxColor = boxColour;
     }
 
-    public Country getDestinationCountry() {
+    public String getDestinationCountry() {
         return destinationCountry;
     }
 
-    public void setDestinationCountry(Country destinationCountry) {
+    public void setDestinationCountry(String destinationCountry) {
         this.destinationCountry = destinationCountry;
     }
 

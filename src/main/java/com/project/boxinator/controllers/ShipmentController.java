@@ -3,6 +3,7 @@ package com.project.boxinator.controllers;
 import com.project.boxinator.models.Shipment;
 import com.project.boxinator.models.ShipmentStatusHistory;
 import com.project.boxinator.models.User;
+import com.project.boxinator.services.CountryService;
 import com.project.boxinator.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ public class ShipmentController {
     public void addShipment (@RequestBody Shipment shipment) {
         shipmentService.addShipment(shipment);
     }
+
+
 
     @GetMapping
     public ResponseEntity getAllShipments() {

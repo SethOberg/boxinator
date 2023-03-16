@@ -28,12 +28,10 @@ public class ShipmentService {
     }
 
     public void addShipment(Shipment shipment) {
-
+        System.out.println("Received shipment: " + shipment);
         ShipmentStatusHistory SSHCreate = new ShipmentStatusHistory(ShipmentStatus.CREATED, shipment);
         shipment.addSSHToShipment(SSHCreate);
         shipmentRepository.save(shipment);
-
-
     }
 
     public Shipment update(Shipment shipment) {

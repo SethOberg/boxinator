@@ -22,7 +22,7 @@ public class ShipmentStatusHistory {
     private ShipmentStatus shipmentStatus;
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+    private Date createdAt; //local date
 
     @JsonIgnore
     @ManyToOne
