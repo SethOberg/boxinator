@@ -1,6 +1,7 @@
 package com.project.boxinator.models.dtos;
 
 import com.project.boxinator.enums.TypeOfUser;
+import com.project.boxinator.models.Country;
 import com.project.boxinator.models.Shipment;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToMany;
@@ -16,7 +17,7 @@ public class UserDto {
     private String lastName;
     private String password;
     private String dateOfBirth;
-    private String country;
+    private Country country;
     private Integer zipCode;
     private String contactNumber;
     private TypeOfUser typeOfUser;

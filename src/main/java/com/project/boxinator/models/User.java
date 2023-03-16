@@ -30,8 +30,9 @@ public class User {
     private String password;
     @Column(length = 50)
     private String dateOfBirth; //Kanske vill byta till date
-    @Column(length = 50, nullable = false)
-    private String country;
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Country country;
     @Column(length = 50)
     private Integer zipCode;
     @Column(length = 50)
@@ -94,11 +95,11 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getCountry() {
+    public Country getCountry() {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(Country country) {
         this.country = country;
     }
 

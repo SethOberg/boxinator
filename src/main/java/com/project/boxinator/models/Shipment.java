@@ -28,8 +28,10 @@ public class Shipment {
 
     @Column(length = 50, nullable = false)
     private String boxColour;
-    @Column(nullable = false)
-    private String destinationCountry;
+
+    @ManyToOne
+    @JoinColumn(name = "destination_country_id")
+    private Country destinationCountry;
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -38,7 +40,10 @@ public class Shipment {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipment")
     private Set<ShipmentStatusHistory> shipmentHistory = new HashSet<>();
 
-    public Shipment(int id, String recieverName, WeightOption weightOption, String boxColour, String destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
+    @Column(length = 10)
+    private Integer price;
+
+    public Shipment(int id, String recieverName, WeightOption weightOption, String boxColour, Country destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
         Id = id;
         this.recieverName = recieverName;
         this.weightOption = weightOption;
@@ -83,12 +88,20 @@ public class Shipment {
         this.boxColour = boxColour;
     }
 
-    public String getDestinationCountry() {
+    public Country getDestinationCountry() {
         return destinationCountry;
     }
 
-    public void setDestinationCountry(String destinationCountry) {
+    public void setDestinationCountry(Country destinationCountry) {
         this.destinationCountry = destinationCountry;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public User getUser() {
