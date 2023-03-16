@@ -17,7 +17,7 @@ public class UserDto {
     private String lastName;
     private String password;
     private String dateOfBirth;
-    private Country country;
+    private String country;
     private Integer zipCode;
     private String contactNumber;
     private TypeOfUser typeOfUser;

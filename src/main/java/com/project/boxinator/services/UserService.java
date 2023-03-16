@@ -1,6 +1,8 @@
 package com.project.boxinator.services;
 
+import com.project.boxinator.enums.TypeOfUser;
 import com.project.boxinator.exceptions.UserNotFoundException;
+import com.project.boxinator.models.Country;
 import com.project.boxinator.models.User;
 import com.project.boxinator.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +17,15 @@ public class UserService {
 
     public List<User> getAllUsers() { return userRepository.findAll(); }
 
-    public User getUserById(Integer id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+    public User getUserById(String uuid) {
+        return userRepository.findById(uuid)
+                .orElseThrow(() -> new UserNotFoundException(uuid));
     }
 
     public User addUser(User user) {
         return userRepository.save(user);
     }
+
 
     public User update(User user) {
         getUserById(user.getId());

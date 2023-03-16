@@ -11,6 +11,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
 @Configuration
+//If use preAuthorize
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig  {
 
