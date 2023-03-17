@@ -84,18 +84,28 @@ public class UserController {
     }
 
     @PostMapping("registerGuest")
-    public ResponseEntity addNewGuestUserFromJwt(@AuthenticationPrincipal Jwt jwt) {
-        User user = new User(jwt.getClaimAsString("sub"), jwt.getClaimAsString("email"), TypeOfUser.Guest);
+    public ResponseEntity addNewGuestUserFromJwt(@AuthenticationPrincipal Jwt jwt) throws Exception {
+        String primaryKey = jwt.getClaimAsString("sub");
 
-        return ResponseEntity.ok(userService.addUser(user));
+        if(userService.getUserById(primaryKey) != null) {
+            throw new Exception("User already exists");
+        } else {
+            User user = new User(primaryKey, jwt.getClaimAsString("email"), TypeOfUser.Guest);
+            return ResponseEntity.ok(userService.addUser(user));
+        }
     }
 
     @PostMapping("registerRegularUser")
-    public ResponseEntity addNewUserFromJwtAndDto(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserDTO userDTO) {
-        //Get primary key from jwt and the
-        User user = new User(jwt.getClaimAsString("sub"), userDTO);
+    public ResponseEntity addNewUserFromJwtAndDto(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserDTO userDTO) throws Exception {
+        String primaryKey = jwt.getClaimAsString("sub");
 
-        return ResponseEntity.ok(userService.addUser(user));
+        if(userService.getUserById(primaryKey) != null) {
+            throw new Exception("User already exists");
+        } else {
+            User user = new User(primaryKey, userDTO);
+            return ResponseEntity.ok(userService.addUser(user));
+        }
+
     }
 
 }
