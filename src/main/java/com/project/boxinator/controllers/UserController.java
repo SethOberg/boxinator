@@ -8,6 +8,7 @@ import com.project.boxinator.models.dtos.CreateUserDTO;
 import com.project.boxinator.services.ShipmentService;
 import com.project.boxinator.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -84,11 +85,11 @@ public class UserController {
     }
 
     @PostMapping("registerGuest")
-    public ResponseEntity addNewGuestUserFromJwt(@AuthenticationPrincipal Jwt jwt) throws Exception {
+    public ResponseEntity addNewGuestUserFromJwt(@AuthenticationPrincipal Jwt jwt) {
         String primaryKey = jwt.getClaimAsString("sub");
 
-        if(userService.getUserById(primaryKey) != null) {
-            throw new Exception("User already exists");
+        if(userService.userExists(primaryKey)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
         } else {
             User user = new User(primaryKey, jwt.getClaimAsString("email"), TypeOfUser.Guest);
             return ResponseEntity.ok(userService.addUser(user));
@@ -96,11 +97,11 @@ public class UserController {
     }
 
     @PostMapping("registerRegularUser")
-    public ResponseEntity addNewUserFromJwtAndDto(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserDTO userDTO) throws Exception {
+    public ResponseEntity addNewUserFromJwtAndDto(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserDTO userDTO) {
         String primaryKey = jwt.getClaimAsString("sub");
 
-        if(userService.getUserById(primaryKey) != null) {
-            throw new Exception("User already exists");
+        if(userService.userExists(primaryKey)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
         } else {
             User user = new User(primaryKey, userDTO);
             return ResponseEntity.ok(userService.addUser(user));

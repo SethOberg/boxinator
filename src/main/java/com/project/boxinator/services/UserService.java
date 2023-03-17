@@ -22,6 +22,10 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(uuid));
     }
 
+    public boolean userExists(String uuid) {
+        return userRepository.existsById(uuid);
+    }
+
     public User addUser(User user) {
         return userRepository.save(user);
     }
