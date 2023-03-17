@@ -90,7 +90,7 @@ public class UserController {
         return ResponseEntity.ok(userService.addUser(user));
     }
 
-    @PostMapping("registerRegularUsers")
+    @PostMapping("registerRegularUser")
     public ResponseEntity addNewUserFromJwtAndDto(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserDTO userDTO) {
         //Get primary key from jwt and the
         User user = new User(jwt.getClaimAsString("sub"), userDTO);
