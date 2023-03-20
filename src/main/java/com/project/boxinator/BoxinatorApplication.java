@@ -18,6 +18,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -48,11 +49,23 @@ public class BoxinatorApplication implements ApplicationRunner {
 		countryRepository.save(Germany);
 		countryRepository.save(Iraq);
 
+		Shipment one = new Shipment("Greger",
+				WeightOption.PREMIUM, "Red", "France", new HashSet<>());
+		Shipment two = new Shipment( "Sven",
+				WeightOption.PREMIUM, "Blue", "Sweden", new HashSet<>());
+		Shipment three = new Shipment("Glenn",
+				WeightOption.HUMBLE, "Green", "Greece", new HashSet<>());
+
+		Set<Shipment> shipmentList = new HashSet<>();
+		shipmentList.add(one);
+		shipmentList.add(two);
+		shipmentList.add(three);
+
 
 		User Milla = new User("3aa1169b-4646-4110-97de-38ec071fb58c ","Milovan", "Glisovic", "abc@dfg.com", "kpr",
 				"1999-09-15", "France", 21231, "0743-23", TypeOfUser.Guest, new HashSet<>());
 		User Seth = new User("945a2d59-16c9-4985-99e4-bf2f415cd0e9","Seth", "Öberg", "abc@dfg.com", "kpr",
-				"1998-09-15", "Iraq", 21231, "0743-23", TypeOfUser.Registered, new HashSet<>());
+				"1998-09-15", "Iraq", 21231, "0743-23", TypeOfUser.Registered, shipmentList);
 
 		userRepository.save(Milla);
 		userRepository.save(Seth);

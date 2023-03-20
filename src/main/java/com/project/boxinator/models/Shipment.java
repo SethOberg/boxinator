@@ -40,14 +40,15 @@ public class Shipment {
     @Column(length = 10)
     private Integer price;
 
-    public Shipment(int id, String receiverName, WeightOption weightOption, String boxColor, String destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
-        Id = id;
+    public Shipment(String receiverName, WeightOption weightOption, String boxColor, String destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
         this.receiverName = receiverName;
         this.weightOption = weightOption;
         this.boxColor = boxColor;
         this.destinationCountry = destinationCountry;
         this.shipmentHistory = shipmentHistory;
     }
+
+
 
     public void addUserToShipment(User user) {
         setUser(user);
