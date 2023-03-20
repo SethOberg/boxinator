@@ -5,17 +5,18 @@ import com.project.boxinator.enums.TypeOfUser;
 public class CreateUserDTO {
     private String firstName;
     private String lastName;
+    private String password;
     private String email;
     private String dateOfBirth; //Kanske vill byta till date
     private String country;
     private Integer zipCode;
     private String contactNumber;
-    private TypeOfUser typeOfUser;
+
 
     public CreateUserDTO() {
     }
 
-    public CreateUserDTO(String firstName, String lastName, String email, String dateOfBirth, String country, Integer zipCode, String contactNumber, TypeOfUser typeOfUser) {
+    public CreateUserDTO(String firstName, String lastName, String email, String dateOfBirth, String country, Integer zipCode, String contactNumber, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -23,7 +24,8 @@ public class CreateUserDTO {
         this.country = country;
         this.zipCode = zipCode;
         this.contactNumber = contactNumber;
-        this.typeOfUser = typeOfUser;
+        this.password = password;
+
     }
 
     public String getFirstName() {
@@ -82,11 +84,11 @@ public class CreateUserDTO {
         this.contactNumber = contactNumber;
     }
 
-    public TypeOfUser getTypeOfUser() {
-        return typeOfUser;
+    public String getPassword() {
+        return password;
     }
 
-    public void setTypeOfUser(TypeOfUser typeOfUser) {
-        this.typeOfUser = typeOfUser;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -35,7 +35,7 @@ public class User {
     private Integer zipCode;
     @Column(length = 50)
     private String contactNumber;
-    @Column(nullable = false)
+
     private TypeOfUser typeOfUser;
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -58,8 +58,9 @@ public class User {
         this.country = userDTO.getCountry();
         this.zipCode = userDTO.getZipCode();
         this.contactNumber = userDTO.getContactNumber();
-        this.typeOfUser = userDTO.getTypeOfUser();
         this.shipments = new HashSet<>();
+        this.password = userDTO.getPassword();
+        this.typeOfUser = TypeOfUser.Registered;
     }
 
     public void addShipmentToUser(Shipment shipment) { shipments.add(shipment); }
