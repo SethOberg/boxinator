@@ -2,6 +2,7 @@ package com.project.boxinator.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.boxinator.enums.TypeOfUser;
+import com.project.boxinator.models.dtos.CreateUserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,8 +19,7 @@ import java.util.Set;
 @Table(name="shipmentUser")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int Id;
+    private String uuid;
     @Column(length = 50)
     private String firstName;
     @Column(length = 50)
@@ -30,9 +30,7 @@ public class User {
     private String password;
     @Column(length = 50)
     private String dateOfBirth; //Kanske vill byta till date
-    @OneToOne
-    @JoinColumn(nullable = false)
-    private Country country;
+    private String country;
     @Column(length = 50)
     private Integer zipCode;
     @Column(length = 50)
@@ -43,16 +41,37 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Shipment> shipments = new HashSet<>();
 
+
+    public User(String uuid, String email, TypeOfUser typeOfUser) {
+        this.uuid = uuid;
+        this.email = email;
+        this.country = country;
+        this.typeOfUser = typeOfUser;
+    }
+
+    public User(String uuid, CreateUserDTO userDTO) {
+        this.uuid = uuid;
+        this.firstName = userDTO.getFirstName();
+        this.lastName = userDTO.getLastName();
+        this.email = userDTO.getEmail();
+        this.dateOfBirth = userDTO.getDateOfBirth();
+        this.country = userDTO.getCountry();
+        this.zipCode = userDTO.getZipCode();
+        this.contactNumber = userDTO.getContactNumber();
+        this.typeOfUser = userDTO.getTypeOfUser();
+        this.shipments = new HashSet<>();
+    }
+
     public void addShipmentToUser(Shipment shipment) { shipments.add(shipment); }
     public void add(User user) {
     }
 
-    public int getId() {
-        return Id;
+    public String getId() {
+        return uuid;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setId(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getFirstName() {
@@ -95,11 +114,11 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Country getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
