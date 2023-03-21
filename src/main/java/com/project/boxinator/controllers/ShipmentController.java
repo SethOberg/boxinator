@@ -3,6 +3,8 @@ package com.project.boxinator.controllers;
 import com.project.boxinator.models.Shipment;
 import com.project.boxinator.models.ShipmentStatusHistory;
 import com.project.boxinator.models.User;
+import com.project.boxinator.models.dtos.CreateShipmentDTO;
+import com.project.boxinator.models.dtos.ShipmentDto;
 import com.project.boxinator.services.CountryService;
 import com.project.boxinator.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,8 @@ public class ShipmentController {
     private ShipmentService shipmentService;
 
     @PostMapping
-    public void addShipment (@RequestBody Shipment shipment) {
-        shipmentService.addShipment(shipment);
+    public void addShipment (@RequestBody CreateShipmentDTO shipment) {
+        shipmentService.addShipmentFromDTO(shipment);
     }
 
 

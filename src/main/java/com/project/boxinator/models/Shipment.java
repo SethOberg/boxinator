@@ -1,6 +1,7 @@
 package com.project.boxinator.models;
 
 import com.project.boxinator.enums.WeightOption;
+import com.project.boxinator.models.dtos.CreateShipmentDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -48,7 +49,13 @@ public class Shipment {
         this.shipmentHistory = shipmentHistory;
     }
 
+    public Shipment(CreateShipmentDTO createShipmentDTO) {
+        this.receiverName = createShipmentDTO.getReceiverName();
+        this.weightOption = WeightOption.valueOf(createShipmentDTO.getWeightOption());
+        this.boxColor = createShipmentDTO.getBoxColor();
+        this.destinationCountry = createShipmentDTO.getDestinationCountry();
 
+    }
 
     public void addUserToShipment(User user) {
         setUser(user);
