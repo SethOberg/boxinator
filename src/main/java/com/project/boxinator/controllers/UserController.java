@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class UserController {
 
     @Autowired
@@ -100,7 +100,7 @@ public class UserController {
     @PostMapping("registerRegularUser")
     public ResponseEntity addNewUserFromJwtAndDto(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateUserDTO userDTO) {
         String primaryKey = jwt.getClaimAsString("sub");
-
+        System.out.println("Hello");
         if(userService.userExists(primaryKey)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
         } else {

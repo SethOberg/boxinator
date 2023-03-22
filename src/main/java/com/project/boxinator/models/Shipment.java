@@ -30,7 +30,7 @@ public class Shipment {
     @Column(length = 50, nullable = false)
     private String destinationCountry;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
 
@@ -48,6 +48,14 @@ public class Shipment {
         this.destinationCountry = destinationCountry;
         this.shipmentHistory = shipmentHistory;
     }
+    public Shipment( String receiverName, WeightOption weightOption, String boxColor, String destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
+        this.receiverName = receiverName;
+        this.weightOption = weightOption;
+        this.boxColor = boxColor;
+        this.destinationCountry = destinationCountry;
+        this.shipmentHistory = shipmentHistory;
+    }
+
 
     public void addUserToShipment(User user) {
         setUser(user);
