@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/countries")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class CountryController {
 
     @Autowired
@@ -19,8 +19,9 @@ public class CountryController {
     @PostMapping
     public void addCountry (@RequestBody Country country) { countryService.addCountry(country); }
 
-    @GetMapping
+    @GetMapping("/list")
     public ResponseEntity getAllCountries() { return ResponseEntity.ok(countryService.getAllCountries()); }
+
 
     @GetMapping("{countryId}")
     public ResponseEntity getCountry(@PathVariable Integer countryId) {

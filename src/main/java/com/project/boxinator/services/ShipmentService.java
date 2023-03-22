@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ShipmentService {
@@ -25,6 +26,9 @@ public class ShipmentService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
@@ -42,6 +46,30 @@ public class ShipmentService {
         User user = userService.getUserById(shipment.getUser().getId());
         user.addShipmentToUser(shipment);
         userRepository.save(user);
+        shipmentRepository.save(shipment);
+    }
+
+    public void addGuestShipment(Shipment shipment, String email) throws Exception{
+        //create a user that only stores email and a random ID since necessary
+       User user1 = userRepository.findByEmail(email);
+        if(user1 == null){
+        User user = new User();
+        user.setEmail(email);
+        user.setId(String.valueOf(UUID.randomUUID()));
+        user.setTypeOfUser(shipment.getUser().getTypeOfUser());
+        shipment.addUserToShipment(user);
+        System.out.println("Received shipment: " + shipment);
+        ShipmentStatusHistory SSHCreate = new ShipmentStatusHistory(ShipmentStatus.CREATED, shipment);
+        shipment.addSSHToShipment(SSHCreate);
+        //shipment.setId(UUID.randomUUID());
+        }else {
+
+                shipment.addUserToShipment(user1);
+                System.out.println(shipment.getBoxColour());
+                System.out.println("Received shipment: " + shipment);
+                ShipmentStatusHistory SSHCreate = new ShipmentStatusHistory(ShipmentStatus.CREATED, shipment);
+                shipment.addSSHToShipment(SSHCreate);
+        }
         shipmentRepository.save(shipment);
     }
 

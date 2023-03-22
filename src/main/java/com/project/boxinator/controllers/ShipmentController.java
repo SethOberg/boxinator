@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/shipments")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class ShipmentController {
 
     @Autowired
@@ -41,6 +41,21 @@ public class ShipmentController {
         if(shipmentId != shipment.getId())
             ResponseEntity.badRequest().build();
         shipmentService.update(shipment);
+    }
+
+
+    @PostMapping("/createGuestShipment/{email}")
+    public ResponseEntity addShipmentForGuest(@RequestBody Shipment shipment, @PathVariable String email) throws Exception {
+        if (shipment != null){
+            System.out.println(shipment.getUser().getTypeOfUser());
+            System.out.println(shipment.getBoxColour());
+            shipmentService.addGuestShipment(shipment, email);
+
+        }else {
+            return (ResponseEntity) ResponseEntity.badRequest();
+        }
+
+        return ResponseEntity.ok(200);
     }
 
 //    @PutMapping("{shipmentId}/status")

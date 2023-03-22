@@ -14,6 +14,12 @@ import org.springframework.security.web.SecurityFilterChain;
 //If use preAuthorize
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig  {
+    private static final String[] allowed_endpoints = {
+            "/api/v1/resources/public",
+            "/api/v1/shipments/createGuestShipment/*",
+            "/api/v1/countries/list"
+
+    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -25,7 +31,7 @@ public class SecurityConfig  {
                 .csrf().disable()
                 // Enable security for http requests
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/resources/public").permitAll()
+                        .requestMatchers(allowed_endpoints).permitAll()
                         .requestMatchers("/api/v1/resources/protected").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
@@ -44,6 +50,7 @@ public class SecurityConfig  {
         grantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
 
         JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
+
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
         return jwtAuthenticationConverter;
     }
