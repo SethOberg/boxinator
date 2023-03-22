@@ -39,7 +39,12 @@ public class UserController {
 
     @GetMapping("{userId}")
     public ResponseEntity getUser(@PathVariable String userId) {
-        return ResponseEntity.ok(userService.getUserById(userId));
+
+        if(userService.userExists(userId)) {
+            return ResponseEntity.ok(userService.getUserById(userId));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User does not exist");
+
     }
 
     @PutMapping("{userId}")
