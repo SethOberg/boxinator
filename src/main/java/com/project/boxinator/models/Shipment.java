@@ -48,13 +48,7 @@ public class Shipment {
         this.destinationCountry = destinationCountry;
         this.shipmentHistory = shipmentHistory;
     }
-    public Shipment( String receiverName, WeightOption weightOption, String boxColor, String destinationCountry, Set<ShipmentStatusHistory> shipmentHistory) {
-        this.receiverName = receiverName;
-        this.weightOption = weightOption;
-        this.boxColor = boxColor;
-        this.destinationCountry = destinationCountry;
-        this.shipmentHistory = shipmentHistory;
-    }
+
 
 
     public Shipment(CreateShipmentDTO createShipmentDTO) {
