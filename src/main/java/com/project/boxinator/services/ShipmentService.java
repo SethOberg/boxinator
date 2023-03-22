@@ -27,8 +27,6 @@ public class ShipmentService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
 
     public List<Shipment> getAllShipments() {
         return shipmentRepository.findAll();
