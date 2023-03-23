@@ -16,12 +16,14 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class BoxinatorApplication implements ApplicationRunner {
 	@Autowired
 	private UserRepository userRepository;

@@ -89,4 +89,11 @@ public class ShipmentService {
         shipmentRepository.save(shipment);
     }
 
+    public Shipment addShipmentStatus(Integer shipmentId, ShipmentStatus shipmentStatus) {
+        Shipment shipment = getShipmentById(shipmentId);
+        ShipmentStatusHistory newSSH = new ShipmentStatusHistory(shipmentStatus, shipment);
+        shipment.addSSHToShipment(newSSH);
+        return shipmentRepository.save(shipment);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.project.boxinator.controllers;
 
+import com.project.boxinator.enums.ShipmentStatus;
 import com.project.boxinator.models.Shipment;
 import com.project.boxinator.models.ShipmentStatusHistory;
 import com.project.boxinator.models.User;
@@ -10,6 +11,8 @@ import com.project.boxinator.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/v1/shipments")
@@ -58,15 +61,10 @@ public class ShipmentController {
         return ResponseEntity.ok(200);
     }
 
-//    @PutMapping("{shipmentId}/status")
-//    public ResponseEntity addSSHToShipment(@PathVariable Integer shipmentId, @RequestBody ShipmentStatusHistory shipmentStatusHistory) {
-//    Shipment shipment = shipmentService.getShipmentById(shipmentId);
-//
-//
-//
-//    }
-
-
-
+    @PostMapping("/{shipmentId}/status/{shipmentStatus}")
+    public ResponseEntity addShipmentStatus(@PathVariable Integer shipmentId, @PathVariable String shipmentStatus) {
+        ShipmentStatus status = ShipmentStatus.valueOf(shipmentStatus);
+        return ResponseEntity.ok(shipmentService.addShipmentStatus(shipmentId, status));
+    }
 
 }

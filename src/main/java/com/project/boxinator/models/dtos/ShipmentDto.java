@@ -18,4 +18,7 @@ public class ShipmentDto {
     private String destinationCountry;
     private Set<ShipmentStatusHistory> shipmentHistory = new HashSet<>();
 
+    private String firstName;
+    private String lastName;
+
 }
