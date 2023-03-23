@@ -16,9 +16,15 @@ public class CountryService {
 
     public List<Country> getAllCountries() { return countryRepository.findAll(); }
 
+
     public Country getCountryById(Integer id) {
         return countryRepository.findById(id)
                 .orElseThrow(() -> new CountryNotFoundException(id));
+    }
+
+    public Country getCountryByName(String name) {
+        return countryRepository.findByName(name)
+                .orElseThrow(() -> new CountryNotFoundException("Country with name " + name + " not found"));
     }
 
     public void addCountry(Country country) {

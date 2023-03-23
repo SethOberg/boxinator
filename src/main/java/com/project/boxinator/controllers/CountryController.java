@@ -28,6 +28,11 @@ public class CountryController {
         return ResponseEntity.ok(countryService.getCountryById(countryId));
     }
 
+    @GetMapping("/name/{countryName}")
+    public ResponseEntity getCountryByName(@PathVariable String countryName) {
+        return ResponseEntity.ok(countryService.getCountryByName(countryName));
+    }
+
     @PutMapping("{countryId}")
     public void updateCountry(@PathVariable Integer countryId, @RequestBody Country country) {
         if(countryId != country.getId())
