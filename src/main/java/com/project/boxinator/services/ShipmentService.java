@@ -1,6 +1,7 @@
 package com.project.boxinator.services;
 
 import com.project.boxinator.enums.ShipmentStatus;
+import com.project.boxinator.enums.TypeOfUser;
 import com.project.boxinator.exceptions.ShipmentNotFoundException;
 import com.project.boxinator.models.Shipment;
 import com.project.boxinator.models.ShipmentStatusHistory;
@@ -54,7 +55,7 @@ public class ShipmentService {
         User user = new User();
         user.setEmail(email);
         user.setId(String.valueOf(UUID.randomUUID()));
-        user.setTypeOfUser(shipment.getUser().getTypeOfUser());
+        user.setTypeOfUser(TypeOfUser.Guest);
         shipment.addUserToShipment(user);
         System.out.println("Received shipment: " + shipment);
         ShipmentStatusHistory SSHCreate = new ShipmentStatusHistory(ShipmentStatus.CREATED, shipment);

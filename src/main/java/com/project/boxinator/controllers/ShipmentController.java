@@ -4,6 +4,7 @@ import com.project.boxinator.enums.ShipmentStatus;
 import com.project.boxinator.models.Shipment;
 import com.project.boxinator.models.ShipmentStatusHistory;
 import com.project.boxinator.models.User;
+import com.project.boxinator.models.dtos.CreateGuestShipmentDTO;
 import com.project.boxinator.models.dtos.CreateShipmentDTO;
 import com.project.boxinator.models.dtos.ShipmentDto;
 import com.project.boxinator.services.CountryService;
@@ -11,6 +12,7 @@ import com.project.boxinator.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 
@@ -48,11 +50,12 @@ public class ShipmentController {
 
 
     @PostMapping("/createGuestShipment/{email}")
-    public ResponseEntity addShipmentForGuest(@RequestBody Shipment shipment, @PathVariable String email) throws Exception {
-        if (shipment != null){
-            System.out.println(shipment.getUser().getTypeOfUser());
-            System.out.println(shipment.getBoxColour());
-            shipmentService.addGuestShipment(shipment, email);
+    public ResponseEntity addShipmentForGuest(@RequestBody CreateGuestShipmentDTO guestShipmentDto, @PathVariable String email) throws Exception {
+        if (guestShipmentDto != null){
+            //System.out.println(guestShipmentDto.getGuestUserDto().getTypeOfUser());
+            //System.out.println(guestShipmentDto.getBoxColor());
+            Shipment guestShipment = new Shipment(guestShipmentDto);
+            shipmentService.addGuestShipment(guestShipment, email);
 
         }else {
             return (ResponseEntity) ResponseEntity.badRequest();
