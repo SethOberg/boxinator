@@ -5,6 +5,8 @@ import com.project.boxinator.enums.TypeOfUser;
 import com.project.boxinator.models.Shipment;
 import com.project.boxinator.models.User;
 import com.project.boxinator.models.dtos.CreateUserDTO;
+import com.project.boxinator.repositories.ShipmentRepository;
+import com.project.boxinator.repositories.UserRepository;
 import com.project.boxinator.services.ShipmentService;
 import com.project.boxinator.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,6 +29,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private ShipmentRepository shipmentRepository;
     @Autowired
     private ShipmentService shipmentService;
 
@@ -113,6 +122,14 @@ public class UserController {
             return ResponseEntity.ok(userService.addUser(user));
         }
 
+    }
+
+    @GetMapping("testing1/{email}")
+    public ResponseEntity testStuff(@PathVariable String email){
+        User user = userRepository.findByEmail(email);
+        Set<Shipment> list = shipmentRepository.findAllByUserId(user.getId());
+        User registerGuestUser = new User();
+        return ResponseEntity.ok(shipmentRepository.findAllByUserId(user.getId()));
     }
 
 }
