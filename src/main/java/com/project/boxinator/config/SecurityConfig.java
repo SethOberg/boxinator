@@ -17,7 +17,8 @@ public class SecurityConfig  {
     private static final String[] allowed_endpoints = {
             "/api/v1/resources/public",
             "/api/v1/shipments/createGuestShipment/*",
-            "/api/v1/countries/list"
+            "/api/v1/countries/list",
+            "/api/v1/users/testing1/*"
 
     };
 

@@ -38,7 +38,7 @@ public class User {
 
     private TypeOfUser typeOfUser;
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Shipment> shipments = new HashSet<>();
 
 
@@ -61,6 +61,12 @@ public class User {
         this.shipments = new HashSet<>();
         this.password = userDTO.getPassword();
         this.typeOfUser = TypeOfUser.Registered;
+    }
+
+    public User(String jwt, User user) {
+        this.uuid = jwt;
+        this.typeOfUser = TypeOfUser.Registered;
+
     }
 
     public void addShipmentToUser(Shipment shipment) { shipments.add(shipment); }
