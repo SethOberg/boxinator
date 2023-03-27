@@ -124,12 +124,6 @@ public class UserController {
 
     }
 
-    @GetMapping("testing1/{email}")
-    public ResponseEntity testStuff(@PathVariable String email){
-        User user = userRepository.findByEmail(email);
-        Set<Shipment> list = shipmentRepository.findAllByUserId(user.getId());
-        User registerGuestUser = new User();
-        return ResponseEntity.ok(shipmentRepository.findAllByUserId(user.getId()));
-    }
+
 
 }

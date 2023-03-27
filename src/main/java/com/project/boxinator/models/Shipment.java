@@ -32,11 +32,11 @@ public class Shipment {
     @Column(length = 50, nullable = false)
     private String destinationCountry;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade =  CascadeType.REMOVE)
     @JoinColumn(name="user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipment")
+    @OneToMany(mappedBy = "shipment", cascade =  CascadeType.ALL)
     private Set<ShipmentStatusHistory> shipmentHistory = new HashSet<>();
 
     @Column(length = 10)

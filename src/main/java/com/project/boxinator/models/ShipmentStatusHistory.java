@@ -25,7 +25,7 @@ public class ShipmentStatusHistory {
     private Date createdAt; //local date
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade =  CascadeType.ALL)
     @JoinColumn(name = "shipment_id")
     private Shipment shipment;
 

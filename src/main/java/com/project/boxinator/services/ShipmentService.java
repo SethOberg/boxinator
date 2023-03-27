@@ -8,6 +8,7 @@ import com.project.boxinator.models.ShipmentStatusHistory;
 import com.project.boxinator.models.User;
 import com.project.boxinator.models.dtos.CreateShipmentDTO;
 import com.project.boxinator.models.dtos.ShipmentDto;
+import com.project.boxinator.repositories.SSHRepository;
 import com.project.boxinator.repositories.ShipmentRepository;
 import com.project.boxinator.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class ShipmentService {
     private ShipmentRepository shipmentRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SSHRepository sshRepository;
 
     @Autowired
     private UserService userService;
@@ -56,13 +60,11 @@ public class ShipmentService {
         user.setEmail(email);
         user.setId(String.valueOf(UUID.randomUUID()));
         user.setTypeOfUser(TypeOfUser.Guest);
-        shipment.addUserToShipment(user);
-        System.out.println("Received shipment: " + shipment);
+        User user2 = userRepository.save(user);
+        shipment.addUserToShipment(user2);
         ShipmentStatusHistory SSHCreate = new ShipmentStatusHistory(ShipmentStatus.CREATED, shipment);
         shipment.addSSHToShipment(SSHCreate);
-        //shipment.setId(UUID.randomUUID());
         }else {
-
                 shipment.addUserToShipment(user1);
                 System.out.println(shipment.getBoxColour());
                 System.out.println("Received shipment: " + shipment);
@@ -86,7 +88,6 @@ public class ShipmentService {
         user.addShipmentToUser(shipment);
         shipment.setUser(user);
         shipment.setPrice(createShipmentDTO.getPrice());
-        userRepository.save(user);
         shipmentRepository.save(shipment);
     }
 

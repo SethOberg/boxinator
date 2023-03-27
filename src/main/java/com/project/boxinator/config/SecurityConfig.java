@@ -18,7 +18,7 @@ public class SecurityConfig  {
             "/api/v1/resources/public",
             "/api/v1/shipments/createGuestShipment/*",
             "/api/v1/countries/list",
-            "/api/v1/users/testing1/*"
+
 
     };
 
