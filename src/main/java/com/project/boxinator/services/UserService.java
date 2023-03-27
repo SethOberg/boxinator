@@ -6,6 +6,7 @@ import com.project.boxinator.models.Country;
 import com.project.boxinator.models.Shipment;
 import com.project.boxinator.models.ShipmentStatusHistory;
 import com.project.boxinator.models.User;
+import com.project.boxinator.repositories.SSHRepository;
 import com.project.boxinator.repositories.ShipmentRepository;
 import com.project.boxinator.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ import java.util.Set;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private SSHRepository sshRepository;
 
     @Autowired
     private ShipmentRepository shipmentRepository;
@@ -40,35 +44,38 @@ public class UserService {
     }
 
     public User copyGuestToUserAndDelete(User user){
-        System.out.println("This is the user that was passed through the parameters (line 42): "+user);
+
 
         //retrieve all guest user data
         User guestUser = userRepository.findByEmail(user.getEmail()); //Guest user
 
         if (guestUser != null){
-        System.out.println("This is the Guest user from the database (line 48): "+guestUser);
+
         Set<Shipment> shipmentSet = shipmentRepository.findAllByUserId(guestUser.getId());
 
         //insert all the necessary data into the newly registered user
         User guestToRegisteredUser = new User();
-        guestToRegisteredUser.setId(guestUser.getId());
+        guestToRegisteredUser.setId(user.getId());
         guestToRegisteredUser.setTypeOfUser(TypeOfUser.Registered);
         guestToRegisteredUser.setCountry(user.getCountry());
         guestToRegisteredUser.setEmail(user.getEmail());
         guestToRegisteredUser.setFirstName(user.getFirstName());
         guestToRegisteredUser.setLastName(user.getLastName());
-        guestToRegisteredUser.setShipments(moveShipmentsFromGuestToRegisteredUser(shipmentSet, user));
-        
-        try{
-            userRepository.delete(guestUser);
+        User savedUser = userRepository.save(guestToRegisteredUser);
+        savedUser.setShipments(moveShipmentsFromGuestToRegisteredUser(shipmentSet, user));
+        userRepository.save(savedUser);
+
+
+            try{
+           userRepository.delete(guestUser);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
 
-            return userRepository.save(guestToRegisteredUser);
+            return savedUser;
         }
 
-            return userRepository.save(user);
+            return user;
     }
     private Set<Shipment> moveShipmentsFromGuestToRegisteredUser(Set<Shipment> set, User user){
         Set<Shipment> shipmentSet = new HashSet<>();
@@ -76,9 +83,14 @@ public class UserService {
             Shipment shipment1 = new Shipment(shipment.getReceiverName(), shipment.getWeightOption(),
                     shipment.getBoxColour(), shipment.getDestinationCountry(), shipment.getShipmentHistory());
             shipment1.setUser(user);
+            shipment1.setPrice(shipment.getPrice());
+
+            //Shipment save = shipmentRepository.save(shipment1);
             shipment1.setShipmentHistory(moveSSHFromGuestToRegisteredUsersShipments(shipment.getShipmentHistory(), shipment1));
+            //Shipment s = shipmentRepository.save(save);
             shipmentSet.add(shipment1);
         }
+       shipmentRepository.saveAll(shipmentSet);
         return shipmentSet;
     }
 
@@ -87,6 +99,9 @@ public class UserService {
         for (ShipmentStatusHistory shipmentSSH: set) {
             shipmentSSHSet.add(new ShipmentStatusHistory(shipmentSSH.getShipmentStatus(), shipment));
         }
+       // System.out.println(sshRepository.saveAll(shipmentSSHSet));
+        //Set<ShipmentStatusHistory> s = new HashSet<>(sshRepository.saveAll(shipmentSSHSet));
+        //System.out.println(s);
         return shipmentSSHSet;
     }
 

@@ -38,7 +38,7 @@ public class User {
 
     private TypeOfUser typeOfUser;
     @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade =  CascadeType.REMOVE)
     private Set<Shipment> shipments = new HashSet<>();
 
 
