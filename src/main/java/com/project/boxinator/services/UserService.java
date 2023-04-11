@@ -18,14 +18,14 @@ import java.util.Set;
 
 @Service
 public class UserService {
-    @Autowired
-    private UserRepository userRepository;
+    private  UserRepository userRepository;
+    private  ShipmentRepository shipmentRepository;
 
     @Autowired
-    private SSHRepository sshRepository;
-
-    @Autowired
-    private ShipmentRepository shipmentRepository;
+    public UserService(UserRepository userRepository, ShipmentRepository shipmentRepository) {
+        this.userRepository = userRepository;
+        this.shipmentRepository = shipmentRepository;
+    }
 
     public List<User> getAllUsers() { return userRepository.findAll(); }
 
@@ -44,34 +44,20 @@ public class UserService {
     }
 
     public User copyGuestToUserAndDelete(User user){
-
-
-        //retrieve all guest user data
-        User guestUser = userRepository.findByEmail(user.getEmail()); //Guest user
-
+        User guestUser = userRepository.findByEmail(user.getEmail());
         if (guestUser != null){
-
         Set<Shipment> shipmentSet = shipmentRepository.findAllByUserId(guestUser.getId());
-
-        //insert all the necessary data into the newly registered user
-        User guestToRegisteredUser = new User();
-        guestToRegisteredUser.setId(user.getId());
-        guestToRegisteredUser.setTypeOfUser(TypeOfUser.Registered);
-        guestToRegisteredUser.setCountry(user.getCountry());
-        guestToRegisteredUser.setEmail(user.getEmail());
-        guestToRegisteredUser.setFirstName(user.getFirstName());
-        guestToRegisteredUser.setLastName(user.getLastName());
+        User guestToRegisteredUser = new User(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getDateOfBirth(),
+                user.getCountry(), user.getZipCode(), user.getContactNumber(), TypeOfUser.Registered);
         User savedUser = userRepository.save(guestToRegisteredUser);
         savedUser.setShipments(moveShipmentsFromGuestToRegisteredUser(shipmentSet, user));
         userRepository.save(savedUser);
 
-
-            try{
+        try{
            userRepository.delete(guestUser);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
-
             return savedUser;
         }
 
@@ -84,10 +70,7 @@ public class UserService {
                     shipment.getBoxColour(), shipment.getDestinationCountry(), shipment.getShipmentHistory());
             shipment1.setUser(user);
             shipment1.setPrice(shipment.getPrice());
-
-            //Shipment save = shipmentRepository.save(shipment1);
             shipment1.setShipmentHistory(moveSSHFromGuestToRegisteredUsersShipments(shipment.getShipmentHistory(), shipment1));
-            //Shipment s = shipmentRepository.save(save);
             shipmentSet.add(shipment1);
         }
        shipmentRepository.saveAll(shipmentSet);
@@ -99,9 +82,6 @@ public class UserService {
         for (ShipmentStatusHistory shipmentSSH: set) {
             shipmentSSHSet.add(new ShipmentStatusHistory(shipmentSSH.getShipmentStatus(), shipment));
         }
-       // System.out.println(sshRepository.saveAll(shipmentSSHSet));
-        //Set<ShipmentStatusHistory> s = new HashSet<>(sshRepository.saveAll(shipmentSSHSet));
-        //System.out.println(s);
         return shipmentSSHSet;
     }
 
