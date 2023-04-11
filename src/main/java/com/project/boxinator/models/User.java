@@ -49,6 +49,18 @@ public class User {
         this.typeOfUser = typeOfUser;
     }
 
+    public User(String uuid, String firstName, String lastName, String email, String dateOfBirth, String country, Integer zipCode, String contactNumber, TypeOfUser typeOfUser) {
+        this.uuid = uuid;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.country = country;
+        this.zipCode = zipCode;
+        this.contactNumber = contactNumber;
+        this.typeOfUser = typeOfUser;
+    }
+
     public User(String uuid, CreateUserDTO userDTO) {
         this.uuid = uuid;
         this.firstName = userDTO.getFirstName();
